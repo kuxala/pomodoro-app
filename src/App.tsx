@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import Pomodoro from "./components/Pomodoro";
+import Settings from "./components/Settings";
 const PomodoroH1 = styled.h1`
   padding-top: 32px;
   padding-bottom: 45px;
@@ -35,15 +37,33 @@ const Texts = styled.div`
   white-space: nowrap;
   font-weight: 700;
 `;
-
+const SettingIcon = styled.img`
+  display: flex;
+  margin: 0 auto;
+  margin-top: 70px;
+`;
+const GlobalStyle = createGlobalStyle`
+  * {
+    font-family: 'Roboto' 
+  }
+`;
 function App() {
   const [pomodoro, setPomodoro] = useState<boolean>(true);
   const [short, setShort] = useState<boolean>(false);
   const [long, setLong] = useState<boolean>(false);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [pause, setPause] = useState<any>(false);
+  const [seconds, setSeconds] = useState(300);
+  const [isActive, setIsActive] = useState(false);
+  const [settings, setSettings] = useState(false);
+
+  const [fontFamily, setFontFamily] = useState("Kumbh Sans");
+
   return (
     <>
       <div>
-        <PomodoroH1>Pomodoro</PomodoroH1>
+        <PomodoroH1 style={{ fontFamily }}>Pomodoro</PomodoroH1>
         <TextContainer>
           <Texts
             className={pomodoro ? "active" : "null"}
@@ -52,6 +72,7 @@ function App() {
               setShort(false);
               setLong(false);
             }}
+            style={{ fontFamily }}
           >
             Pomodoro
           </Texts>
@@ -62,6 +83,7 @@ function App() {
               setPomodoro(false);
               setLong(false);
             }}
+            style={{ fontFamily }}
           >
             short break
           </Texts>
@@ -72,11 +94,36 @@ function App() {
               setPomodoro(false);
               setShort(false);
             }}
+            style={{ fontFamily }}
           >
-            {" "}
             long break
           </Texts>
         </TextContainer>
+
+        <Pomodoro
+          hours={hours}
+          setHours={setHours}
+          minutes={minutes}
+          setMinutes={setMinutes}
+          pause={pause}
+          setPause={setPause}
+          fontFamily={fontFamily}
+        />
+
+        <SettingIcon
+          src="../assets/icon-settings.svg"
+          onClick={() => {
+            setSettings(!settings);
+          }}
+        />
+        {settings ? (
+          <Settings
+            settings={settings}
+            setSettings={setSettings}
+            setFontFamily={setFontFamily}
+            fontFamily={fontFamily}
+          />
+        ) : null}
       </div>
     </>
   );
