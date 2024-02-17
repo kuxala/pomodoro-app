@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./components/Pomodoro";
 import Settings from "./components/Settings";
 import ShortBreak from "./components/ShortBreak";
+import { render } from "react-dom";
 const PomodoroH1 = styled.h1`
   padding-top: 32px;
   padding-bottom: 45px;
@@ -63,12 +64,17 @@ function App() {
   const [pomodoroTime, setPomodoroTime] = useState<any>(25);
 
   const [seconds, setSeconds] = useState(pomodoroTime * 60);
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedTime = `${minutes < 10 ? "0" + minutes : minutes}:${
-    remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds
-  }`;
 
+  const minutes = Math.floor(seconds / 60);
+
+  const remainingSeconds = seconds % 60;
+
+  const formattedTime = `${
+    pomodoroTime < 10 ? "0" + pomodoroTime : pomodoroTime
+  }:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
+  // const formattedTime = pomodoroTime;
+
+  console.log("formatedTime: ", formattedTime);
   useEffect(() => {
     if (running) {
       // setSeconds(pomodoroInput * 60);
@@ -118,7 +124,7 @@ function App() {
               setShort(true);
               setPomodoro(false);
               setLong(false);
-              // setPomodoroTime(5);
+              setPomodoroTime(5);
             }}
             style={{ fontFamily }}
           >
@@ -130,7 +136,7 @@ function App() {
               setLong(true);
               setPomodoro(false);
               setShort(false);
-              // setPomodoroTime(15);
+              setPomodoroTime(15);
             }}
             style={{ fontFamily }}
           >
