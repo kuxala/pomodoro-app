@@ -104,11 +104,10 @@ const ColorDivComponents = styled.div`
 const Button = styled.button`
   position: absolute;
   bottom: -5%;
-  left: 35%;
-  /* margin-left: 50px; */
+  left: 50%;
+  transform: translateX(-50%);
   width: 140px;
   height: 53px;
-  flex-shrink: 0;
   border-radius: 26.5px;
   background: #f87070;
   border: 0px;
@@ -142,6 +141,9 @@ function Settings({
   setLongBreakInput,
 }: any) {
   const [active, setActive] = useState<string>(fontFamily);
+  const [red, setRed] = useState(false);
+  const [blue, setBlue] = useState(false);
+  const [pink, setPink] = useState(false);
   return (
     <>
       <Container>
@@ -255,31 +257,44 @@ function Settings({
               <ColorDivComponents
                 onClick={() => {
                   setColor("#F87070");
+                  setRed(true);
+                  setBlue(false);
+                  setPink(false);
                 }}
               >
-                <img src="../../assets/tick.svg" width="20px" />
+                {red ? <img src="../../assets/tick.svg" width="20px" /> : null}
               </ColorDivComponents>
               <ColorDivComponents
                 onClick={() => {
                   setColor("#70F3F8");
+                  setRed(false);
+                  setBlue(true);
+                  setPink(false);
                 }}
                 style={{ backgroundColor: "#70F3F8" }}
-              ></ColorDivComponents>
+              >
+                {blue ? <img src="../../assets/tick.svg" width="20px" /> : null}
+              </ColorDivComponents>
               <ColorDivComponents
                 onClick={() => {
                   setColor("#D881F8");
+                  setRed(false);
+                  setBlue(false);
+                  setPink(true);
                 }}
                 style={{ backgroundColor: "#D881F8" }}
-              ></ColorDivComponents>
+              >
+                {pink ? <img src="../../assets/tick.svg" width="20px" /> : null}
+              </ColorDivComponents>
             </ColorDiv>
           </div>
-          {/* <Button
+          <Button
             onClick={() => {
               setSettings(!settings);
             }}
           >
             Apply
-          </Button> */}
+          </Button>
         </TimeDiv>
       </Container>
     </>

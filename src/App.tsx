@@ -15,7 +15,7 @@ const PomodoroH1 = styled.h1`
   line-height: normal;
 `;
 const TextContainer = styled.div`
-  width: 90%;
+  /* width: 90%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,16 +25,15 @@ const TextContainer = styled.div`
   border-radius: 31.5px;
   background: #161932;
   font-family: "Kumbh Sans";
-  padding: 15px 10px;
+  margin: 15px 10px;
 `;
 const Texts = styled.div`
-  width: 100%;
+  width: 50%;
   border-radius: 26.5px;
   color: rgba(215, 224, 255, 0.5);
-  padding: 18px 22px;
+  padding: 18px 0;
   text-align: center;
-  font-size: 14px;
-  white-space: nowrap;
+  font-size: 12px;
   font-weight: 700;
 `;
 const SettingIcon = styled.img`
