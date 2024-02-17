@@ -109,7 +109,7 @@ const Button = styled.button`
   width: 140px;
   height: 53px;
   border-radius: 26.5px;
-  background: #f87070;
+  background: #161932;
   border: 0px;
   color: #fff;
   text-align: center;
@@ -141,7 +141,7 @@ function Settings({
   setLongBreakInput,
 }: any) {
   const [active, setActive] = useState<string>(fontFamily);
-  const [red, setRed] = useState(false);
+  const [red, setRed] = useState(true);
   const [blue, setBlue] = useState(false);
   const [pink, setPink] = useState(false);
   return (
