@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Pomodoro from "./components/Pomodoro";
 import Settings from "./components/Settings";
-import ShortBreak from "./components/ShortBreak";
-import { render } from "react-dom";
 const PomodoroH1 = styled.h1`
   padding-top: 32px;
   padding-bottom: 45px;
@@ -46,38 +44,29 @@ const SettingIcon = styled.img`
 `;
 
 function App() {
-  const [pomodoro, setPomodoro] = useState<boolean>(false);
+  const [pomodoro, setPomodoro] = useState<boolean>(true);
   const [short, setShort] = useState<boolean>(false);
   const [long, setLong] = useState<boolean>(false);
   const [hours, setHours] = useState<number>(0);
   const [pause, setPause] = useState<any>(false);
-  const [isActive, setIsActive] = useState(false);
   const [settings, setSettings] = useState(false);
   const [fontFamily, setFontFamily] = useState("Kumbh Sans");
   const [color, setColor] = useState("#f87070");
   const [running, setRunning] = useState(false);
-
   const [pomodoroInput, setPomodoroInput] = useState(25);
   const [shortBreakInput, setShortBreakInput] = useState(5);
   const [longBreakInput, setLongBreakInput] = useState(15);
-
   const [pomodoroTime, setPomodoroTime] = useState<any>(25);
-
   const [seconds, setSeconds] = useState(pomodoroTime * 60);
-
   const minutes = Math.floor(seconds / 60);
-
   const remainingSeconds = seconds % 60;
-
   const formattedTime = `${
     pomodoroTime < 10 ? "0" + pomodoroTime : pomodoroTime
   }:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
-  // const formattedTime = pomodoroTime;
 
-  console.log("formatedTime: ", formattedTime);
+  // console.log("formatedTime: ", formattedTime);
   useEffect(() => {
     if (running) {
-      // setSeconds(pomodoroInput * 60);
       const interval = setInterval(() => {
         setSeconds((prevSeconds) => {
           if (prevSeconds <= 0) {
@@ -107,38 +96,47 @@ function App() {
         </PomodoroH1>
         <TextContainer>
           <Texts
-            className={pomodoro ? "active" : "null"}
             onClick={() => {
               setPomodoroTime(25);
               setPomodoro(true);
               setShort(false);
               setLong(false);
             }}
-            style={{ fontFamily }}
+            style={{
+              fontFamily,
+              backgroundColor: pomodoro ? color : "transparent",
+              color: pomodoro ? "black" : "white",
+            }}
           >
             Pomodoro
           </Texts>
           <Texts
-            className={short ? "active" : "null"}
             onClick={() => {
               setShort(true);
               setPomodoro(false);
               setLong(false);
               setPomodoroTime(5);
             }}
-            style={{ fontFamily }}
+            style={{
+              fontFamily,
+              backgroundColor: short ? color : "transparent",
+              color: short ? "black" : "white",
+            }}
           >
             short break
           </Texts>
           <Texts
-            className={long ? "active" : "null"}
             onClick={() => {
               setLong(true);
               setPomodoro(false);
               setShort(false);
               setPomodoroTime(15);
             }}
-            style={{ fontFamily }}
+            style={{
+              fontFamily,
+              backgroundColor: long ? color : "transparent",
+              color: long ? "black" : "white",
+            }}
           >
             long break
           </Texts>

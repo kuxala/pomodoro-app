@@ -1,5 +1,4 @@
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Circular = styled.div`

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -75,11 +76,11 @@ const FontDivComponents = styled.div`
   width: 40px;
   height: 40px;
   flex-shrink: 0;
-  background-color: #161932;
+  background-color: #eff1fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: black;
   border-radius: 50%;
 `;
 const ColorDiv = styled.div`
@@ -119,12 +120,19 @@ const Button = styled.button`
   font-weight: 700;
   line-height: normal;
 `;
+const backgroundColor = {
+  backgroundColor: "Black",
+  color: "#fff",
+};
+const backgroundWhite = {
+  backgroundColor: "#EFF1FA",
+};
+
 function Settings({
   settings,
   setSettings,
-  setFontFamily,
   fontFamily,
-  color,
+  setFontFamily,
   setColor,
   pomodoroInput,
   setPomodoroInput,
@@ -133,6 +141,7 @@ function Settings({
   longBreakInput,
   setLongBreakInput,
 }: any) {
+  const [active, setActive] = useState<string>(fontFamily);
   return (
     <>
       <Container>
@@ -187,31 +196,48 @@ function Settings({
               style={{
                 paddingTop: "40px",
                 paddingBottom: "10px",
-                fontFamily: fontFamily,
               }}
             >
               FONT
             </TimeDivHeader>
             <FontDiv>
               <FontDivComponents
-                style={{ fontFamily: "Kumbh Sans" }}
+                style={{
+                  ...(active === "Kumbh Sans"
+                    ? backgroundColor
+                    : backgroundWhite),
+                  fontFamily,
+                }}
                 onClick={() => {
                   setFontFamily("Kumbh Sans");
+                  setActive("Kumbh Sans");
                 }}
               >
                 Aa
               </FontDivComponents>
               <FontDivComponents
-                style={{ fontFamily: "Roboto Slab", fontWeight: "300" }}
+                style={{
+                  ...(active == "Roboto Slab"
+                    ? backgroundColor
+                    : backgroundWhite),
+                  fontFamily,
+                }}
                 onClick={() => {
                   setFontFamily("Roboto Slab");
+                  setActive("Roboto Slab");
                 }}
               >
                 Aa
               </FontDivComponents>
               <FontDivComponents
-                style={{ fontFamily: "Space Mono", fontWeight: "700" }}
+                style={{
+                  ...(active == "Space Mono"
+                    ? backgroundColor
+                    : backgroundWhite),
+                  fontFamily,
+                }}
                 onClick={() => {
+                  setActive("Space Mono");
                   setFontFamily("Space Mono");
                 }}
               >
