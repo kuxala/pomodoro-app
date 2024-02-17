@@ -3,6 +3,7 @@ import "./App.css";
 import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./components/Pomodoro";
 import Settings from "./components/Settings";
+import ShortBreak from "./components/ShortBreak";
 const PomodoroH1 = styled.h1`
   padding-top: 32px;
   padding-bottom: 45px;
@@ -42,32 +43,67 @@ const SettingIcon = styled.img`
   margin: 0 auto;
   margin-top: 70px;
 `;
-const GlobalStyle = createGlobalStyle`
-  * {
-    font-family: 'Roboto' 
-  }
-`;
+
 function App() {
-  const [pomodoro, setPomodoro] = useState<boolean>(true);
+  const [pomodoro, setPomodoro] = useState<boolean>(false);
   const [short, setShort] = useState<boolean>(false);
   const [long, setLong] = useState<boolean>(false);
   const [hours, setHours] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(0);
   const [pause, setPause] = useState<any>(false);
-  const [seconds, setSeconds] = useState(300);
   const [isActive, setIsActive] = useState(false);
   const [settings, setSettings] = useState(false);
-
   const [fontFamily, setFontFamily] = useState("Kumbh Sans");
+  const [color, setColor] = useState("#f87070");
+  const [running, setRunning] = useState(false);
+
+  const [pomodoroInput, setPomodoroInput] = useState(25);
+  const [shortBreakInput, setShortBreakInput] = useState(5);
+  const [longBreakInput, setLongBreakInput] = useState(15);
+
+  const [pomodoroTime, setPomodoroTime] = useState<any>(25);
+
+  const [seconds, setSeconds] = useState(pomodoroTime * 60);
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedTime = `${minutes < 10 ? "0" + minutes : minutes}:${
+    remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds
+  }`;
+
+  useEffect(() => {
+    if (running) {
+      // setSeconds(pomodoroInput * 60);
+      const interval = setInterval(() => {
+        setSeconds((prevSeconds) => {
+          if (prevSeconds <= 0) {
+            clearInterval(interval);
+            setRunning(false);
+            return 0;
+          }
+
+          return prevSeconds - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [running, pomodoroTime]);
 
   return (
     <>
       <div>
-        <PomodoroH1 style={{ fontFamily }}>Pomodoro</PomodoroH1>
+        <PomodoroH1
+          style={{ fontFamily }}
+          onClick={() => {
+            setPomodoroTime(25);
+          }}
+        >
+          Pomodoro
+        </PomodoroH1>
         <TextContainer>
           <Texts
             className={pomodoro ? "active" : "null"}
             onClick={() => {
+              setPomodoroTime(25);
               setPomodoro(true);
               setShort(false);
               setLong(false);
@@ -82,6 +118,7 @@ function App() {
               setShort(true);
               setPomodoro(false);
               setLong(false);
+              // setPomodoroTime(5);
             }}
             style={{ fontFamily }}
           >
@@ -93,6 +130,7 @@ function App() {
               setLong(true);
               setPomodoro(false);
               setShort(false);
+              // setPomodoroTime(15);
             }}
             style={{ fontFamily }}
           >
@@ -104,10 +142,13 @@ function App() {
           hours={hours}
           setHours={setHours}
           minutes={minutes}
-          setMinutes={setMinutes}
           pause={pause}
           setPause={setPause}
           fontFamily={fontFamily}
+          color={color}
+          running={running}
+          setRunning={setRunning}
+          formattedTime={formattedTime}
         />
 
         <SettingIcon
@@ -122,6 +163,14 @@ function App() {
             setSettings={setSettings}
             setFontFamily={setFontFamily}
             fontFamily={fontFamily}
+            color={color}
+            setColor={setColor}
+            pomodoroInput={pomodoroInput}
+            setPomodoroInput={setPomodoroInput}
+            shortBreakInput={shortBreakInput}
+            setShortBreakInput={setShortBreakInput}
+            longBreakInput={longBreakInput}
+            setLongBreakInput={setLongBreakInput}
           />
         ) : null}
       </div>

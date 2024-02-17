@@ -1,4 +1,5 @@
 import { CircularProgress } from "@mui/material";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Circular = styled.div`
@@ -42,33 +43,30 @@ const CircularPause = styled.p`
   letter-spacing: 13.125px;
 `;
 function Pomodoro({
-  days,
-  setdays,
-  minutes,
-  setMinutes,
   pause,
   setPause,
   fontFamily,
+  color,
+  setRunning,
+  running,
+  formattedTime,
 }: any) {
   return (
     <>
       <div>
         <Circular>
           <CircularProgress
-            style={{ color: "#f87070" }}
+            style={{ color: color }}
             size="300px"
             variant="determinate"
             value={65}
-            // disableShrink={false}
           />
-          <CircularP style={{ fontFamily }}>
-            {days}
-            {minutes}
-          </CircularP>
+          <CircularP style={{ fontFamily }}>{formattedTime}</CircularP>
           <CircularPause
             style={{ fontFamily }}
             onClick={() => {
               setPause(!pause);
+              setRunning(!running);
             }}
           >
             {pause ? "PAUSE" : "START"}

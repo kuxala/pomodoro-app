@@ -119,7 +119,20 @@ const Button = styled.button`
   font-weight: 700;
   line-height: normal;
 `;
-function Settings({ settings, setSettings, setFontFamily, fontFamily }: any) {
+function Settings({
+  settings,
+  setSettings,
+  setFontFamily,
+  fontFamily,
+  color,
+  setColor,
+  pomodoroInput,
+  setPomodoroInput,
+  shortBreakInput,
+  setShortBreakInput,
+  longBreakInput,
+  setLongBreakInput,
+}: any) {
   return (
     <>
       <Container>
@@ -140,15 +153,33 @@ function Settings({ settings, setSettings, setFontFamily, fontFamily }: any) {
           <div>
             <DivFlex>
               <P>pomodoro</P>
-              <Input type="number" value={25} />
+              <Input
+                type="number"
+                value={pomodoroInput}
+                onChange={(e) => {
+                  setPomodoroInput(e.target.value);
+                }}
+              />
             </DivFlex>
             <DivFlex>
               <P>short break</P>
-              <Input type="number" value={5} />
+              <Input
+                type="number"
+                value={shortBreakInput}
+                onChange={(e) => {
+                  setShortBreakInput(e.target.value);
+                }}
+              />
             </DivFlex>
             <DivFlex>
               <P>long break</P>
-              <Input type="number" value={15} />
+              <Input
+                type="number"
+                value={longBreakInput}
+                onChange={(e) => {
+                  setLongBreakInput(e.target.value);
+                }}
+              />
             </DivFlex>
           </div>
           <div>
@@ -195,24 +226,34 @@ function Settings({ settings, setSettings, setFontFamily, fontFamily }: any) {
               COLOR
             </TimeDivHeader>
             <ColorDiv>
-              <ColorDivComponents>
+              <ColorDivComponents
+                onClick={() => {
+                  setColor("#F87070");
+                }}
+              >
                 <img src="../../assets/tick.svg" width="20px" />
               </ColorDivComponents>
               <ColorDivComponents
+                onClick={() => {
+                  setColor("#70F3F8");
+                }}
                 style={{ backgroundColor: "#70F3F8" }}
               ></ColorDivComponents>
               <ColorDivComponents
+                onClick={() => {
+                  setColor("#D881F8");
+                }}
                 style={{ backgroundColor: "#D881F8" }}
               ></ColorDivComponents>
             </ColorDiv>
           </div>
-          <Button
+          {/* <Button
             onClick={() => {
               setSettings(!settings);
             }}
           >
             Apply
-          </Button>
+          </Button> */}
         </TimeDiv>
       </Container>
     </>
