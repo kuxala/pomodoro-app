@@ -49,6 +49,7 @@ function Pomodoro({
   setRunning,
   running,
   formattedTime,
+  progress,
 }: any) {
   return (
     <>
@@ -58,7 +59,7 @@ function Pomodoro({
             style={{ color: color }}
             size="300px"
             variant="determinate"
-            value={65}
+            value={progress}
           />
           <CircularP style={{ fontFamily }}>{formattedTime}</CircularP>
           <CircularPause

@@ -15,7 +15,6 @@ const PomodoroH1 = styled.h1`
   line-height: normal;
 `;
 const TextContainer = styled.div`
-  /* width: 90%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +25,11 @@ const TextContainer = styled.div`
   background: #161932;
   font-family: "Kumbh Sans";
   margin: 15px 10px;
+
+  @media only screen and (min-width: 768px) {
+    width: 40%;
+    margin: 0 auto;
+  }
 `;
 const Texts = styled.div`
   width: 50%;
@@ -35,6 +39,9 @@ const Texts = styled.div`
   text-align: center;
   font-size: 12px;
   font-weight: 700;
+  @media only screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const SettingIcon = styled.img`
   display: flex;
@@ -63,7 +70,10 @@ function App() {
     pomodoroTime < 10 ? "0" + pomodoroTime : pomodoroTime
   }:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
 
-  // console.log("formatedTime: ", formattedTime);
+  const elapsedDuration = (pomodoroTime * 60 - seconds) / 60;
+
+  const progress = ((pomodoroTime - elapsedDuration) / pomodoroTime) * 100;
+
   useEffect(() => {
     if (running) {
       const interval = setInterval(() => {
@@ -152,6 +162,7 @@ function App() {
           running={running}
           setRunning={setRunning}
           formattedTime={formattedTime}
+          progress={progress}
         />
 
         <SettingIcon

@@ -11,6 +11,9 @@ const Container = styled.div`
   transform: translate(-50%, 10%);
   border-radius: 15px;
   background: #fff;
+  @media only screen and (min-width: 768px) {
+    max-width: 540px;
+  }
 `;
 const SettingDiv = styled.div`
   display: flex;
