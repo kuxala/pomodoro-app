@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-
+import "animate.css";
 const Container = styled.div`
   width: 80%;
   margin: 0 auto;
@@ -144,12 +144,12 @@ function Settings({
   setLongBreakInput,
 }: any) {
   const [active, setActive] = useState<string>(fontFamily);
-  const [red, setRed] = useState(true);
+  const [red, setRed] = useState(false);
   const [blue, setBlue] = useState(false);
   const [pink, setPink] = useState(false);
   return (
     <>
-      <Container>
+      <Container className="animate__animated animate__fadeIn">
         <SettingDiv>
           <SettingH1>Settings</SettingH1>
           <img

@@ -3,6 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 import Pomodoro from "./components/Pomodoro";
 import Settings from "./components/Settings";
+import "animate.css";
 const PomodoroH1 = styled.h1`
   padding-top: 32px;
   padding-bottom: 45px;
@@ -27,7 +28,7 @@ const TextContainer = styled.div`
   margin: 15px 10px;
 
   @media only screen and (min-width: 768px) {
-    width: 40%;
+    max-width: 450px;
     margin: 0 auto;
   }
 `;
@@ -107,7 +108,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="animate__animated animate__fadeInDown">
         <PomodoroH1 style={{ fontFamily }} onClick={() => {}}>
           Pomodoro
         </PomodoroH1>
