@@ -142,11 +142,13 @@ function Settings({
   setShortBreakInput,
   longBreakInput,
   setLongBreakInput,
+  setPomodoroTime,
 }: any) {
   const [active, setActive] = useState<string>(fontFamily);
   const [red, setRed] = useState(false);
   const [blue, setBlue] = useState(false);
   const [pink, setPink] = useState(false);
+
   return (
     <>
       <Container className="animate__animated animate__fadeIn">
@@ -294,6 +296,7 @@ function Settings({
           <Button
             onClick={() => {
               setSettings(!settings);
+              setPomodoroTime(pomodoroInput);
             }}
           >
             Apply
