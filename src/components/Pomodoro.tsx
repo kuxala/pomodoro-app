@@ -46,10 +46,11 @@ function Pomodoro({
   setPause,
   fontFamily,
   color,
-  setRunning,
-  running,
-  formattedTime,
   progress,
+  countDownDate,
+  formatTime,
+  isRunning,
+  setIsRunning,
 }: any) {
   return (
     <>
@@ -61,12 +62,14 @@ function Pomodoro({
             variant="determinate"
             value={progress}
           />
-          <CircularP style={{ fontFamily }}>{formattedTime}</CircularP>
+          <CircularP style={{ fontFamily }}>
+            {formatTime(countDownDate)}
+          </CircularP>
           <CircularPause
             style={{ fontFamily }}
             onClick={() => {
+              setIsRunning(!isRunning);
               setPause(!pause);
-              setRunning(!running);
             }}
           >
             {pause ? "PAUSE" : "START"}

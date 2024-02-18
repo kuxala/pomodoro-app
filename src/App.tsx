@@ -53,54 +53,62 @@ function App() {
   const [pomodoro, setPomodoro] = useState<boolean>(true);
   const [short, setShort] = useState<boolean>(false);
   const [long, setLong] = useState<boolean>(false);
-  const [hours, setHours] = useState<number>(0);
   const [pause, setPause] = useState<any>(false);
   const [settings, setSettings] = useState(false);
   const [fontFamily, setFontFamily] = useState("Kumbh Sans");
   const [color, setColor] = useState("#f87070");
   const [running, setRunning] = useState(false);
-  const [pomodoroInput, setPomodoroInput] = useState(25);
-  const [shortBreakInput, setShortBreakInput] = useState(5);
-  const [longBreakInput, setLongBreakInput] = useState(15);
+  // const [pomodoroInput, setPomodoroInput] = useState(25);
+  // const [shortBreakInput, setShortBreakInput] = useState(5);
+  // const [longBreakInput, setLongBreakInput] = useState(15);
+
+  const [progress, setProgress] = useState<number>(100);
+
   const [pomodoroTime, setPomodoroTime] = useState<any>(25);
-  const [seconds, setSeconds] = useState(pomodoroTime * 60);
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedTime = `${
-    pomodoroTime < 10 ? "0" + pomodoroTime : pomodoroTime
-  }:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
+  const [countDownDate, setCountDownDate] = useState(pomodoroTime * 60);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const elapsedDuration = (pomodoroTime * 60 - seconds) / 60;
-
-  const progress = ((pomodoroTime - elapsedDuration) / pomodoroTime) * 100;
+  const startTimer = () => {
+    setIsRunning(true);
+  };
 
   useEffect(() => {
-    if (running) {
-      const interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          if (prevSeconds <= 0) {
-            clearInterval(interval);
-            setRunning(false);
-            return 0;
-          }
+    setCountDownDate(pomodoroTime * 60);
+  }, [pomodoroTime]);
 
-          return prevSeconds - 1;
+  useEffect(() => {
+    let intervalId: any;
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setCountDownDate((prevCount) => {
+          if (prevCount === 1) {
+            clearInterval(intervalId); // Clear interval when countdown reaches 0
+            setIsRunning(false);
+            alert("Timer is out");
+          }
+          return prevCount - 1;
         });
       }, 1000);
-
-      return () => clearInterval(interval);
     }
-  }, [running, pomodoroTime]);
+    return () => clearInterval(intervalId); // Cleanup function to clear interval when component unmounts or isRunning changes
+  }, [isRunning]);
+
+  const formatTime = (totalSeconds: number) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes < 10 ? "0" + minutes : minutes}:${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
+  };
+
+  useEffect(() => {
+    setProgress((countDownDate / (pomodoroTime * 60)) * 100);
+  }, [countDownDate, pomodoroTime]);
 
   return (
     <>
       <div>
-        <PomodoroH1
-          style={{ fontFamily }}
-          onClick={() => {
-            setPomodoroTime(25);
-          }}
-        >
+        <PomodoroH1 style={{ fontFamily }} onClick={() => {}}>
           Pomodoro
         </PomodoroH1>
         <TextContainer>
@@ -152,16 +160,17 @@ function App() {
         </TextContainer>
 
         <Pomodoro
-          hours={hours}
-          setHours={setHours}
-          minutes={minutes}
           pause={pause}
           setPause={setPause}
           fontFamily={fontFamily}
           color={color}
           running={running}
           setRunning={setRunning}
-          formattedTime={formattedTime}
+          startTimer={startTimer}
+          countDownDate={countDownDate}
+          setIsRunning={setIsRunning}
+          isRunning={isRunning}
+          formatTime={formatTime}
           progress={progress}
         />
 
@@ -179,12 +188,12 @@ function App() {
             fontFamily={fontFamily}
             color={color}
             setColor={setColor}
-            pomodoroInput={pomodoroInput}
-            setPomodoroInput={setPomodoroInput}
-            shortBreakInput={shortBreakInput}
-            setShortBreakInput={setShortBreakInput}
-            longBreakInput={longBreakInput}
-            setLongBreakInput={setLongBreakInput}
+            // pomodoroInput={pomodoroInput}
+            // setPomodoroInput={setPomodoroInput}
+            // shortBreakInput={shortBreakInput}
+            // setShortBreakInput={setShortBreakInput}
+            // longBreakInput={longBreakInput}
+            // setLongBreakInput={setLongBreakInput}
           />
         ) : null}
       </div>
